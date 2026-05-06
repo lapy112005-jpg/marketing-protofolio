@@ -1,0 +1,352 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: #0a0a0a; color: #f0ede8; min-height: 100vh; }
+  .hero { position: relative; padding: 80px 48px 60px; border-bottom: 0.5px solid rgba(240,237,232,0.12); overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -120px; right: -120px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(255,165,90,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #e88040; margin-bottom: 20px; font-weight: 500; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(44px, 6vw, 72px); font-weight: 700; line-height: 1.05; color: #f0ede8; margin-bottom: 12px; }
+  .hero-title { font-size: 16px; color: rgba(240,237,232,0.55); font-weight: 300; margin-bottom: 32px; max-width: 560px; line-height: 1.7; }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 20px; font-size: 13px; color: rgba(240,237,232,0.5); }
+  .contact-row span { display: flex; align-items: center; gap: 6px; }
+  .contact-row i { font-size: 15px; color: #e88040; }
+  section { padding: 56px 48px; border-bottom: 0.5px solid rgba(240,237,232,0.08); }
+  .section-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #e88040; margin-bottom: 32px; font-weight: 500; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: rgba(240,237,232,0.04); border: 0.5px solid rgba(240,237,232,0.1); border-radius: 12px; padding: 20px; }
+  .stat-card.highlight { background: rgba(232,128,64,0.08); border-color: rgba(232,128,64,0.25); }
+  .stat-label { font-size: 11px; color: rgba(240,237,232,0.4); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #f0ede8; line-height: 1; }
+  .stat-card.highlight .stat-value { color: #e88040; }
+  .stat-source { font-size: 10px; color: rgba(240,237,232,0.3); margin-top: 6px; letter-spacing: 0.5px; }
+  .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+  .proof-card { background: rgba(240,237,232,0.03); border: 0.5px solid rgba(240,237,232,0.09); border-radius: 14px; padding: 24px; }
+  .proof-title { font-size: 10px; color: rgba(240,237,232,0.6); margin-bottom: 16px; letter-spacing: 1px; text-transform: uppercase; }
+  .proof-stats { display: flex; flex-direction: column; gap: 12px; }
+  .proof-row { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 0.5px solid rgba(240,237,232,0.06); padding-bottom: 10px; }
+  .proof-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .proof-key { font-size: 13px; color: rgba(240,237,232,0.45); }
+  .proof-val { font-size: 15px; font-weight: 500; color: #f0ede8; }
+  .proof-val.orange { color: #e88040; }
+  .accounts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .account-chip { background: rgba(240,237,232,0.04); border: 0.5px solid rgba(240,237,232,0.1); border-radius: 10px; padding: 16px 18px; display: flex; align-items: center; gap: 12px; }
+  .platform-dot { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .ig { background: rgba(200,60,130,0.15); color: #e06090; }
+  .tt { background: rgba(0,210,200,0.1); color: #00d2c8; }
+  .account-info { min-width: 0; }
+  .account-handle { font-size: 13px; font-weight: 500; color: #f0ede8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .account-followers { font-size: 11px; color: #e88040; margin-top: 2px; }
+  .exp-list { display: flex; flex-direction: column; gap: 32px; }
+  .exp-item { display: grid; grid-template-columns: 140px 1fr; gap: 24px; }
+  .exp-date { font-size: 11px; color: rgba(240,237,232,0.35); padding-top: 3px; letter-spacing: 0.5px; }
+  .exp-role { font-size: 16px; font-weight: 500; color: #f0ede8; margin-bottom: 4px; }
+  .exp-company { font-size: 12px; color: #e88040; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .exp-desc { font-size: 13px; color: rgba(240,237,232,0.45); line-height: 1.7; }
+  .exp-bullets { margin-top: 10px; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .exp-bullets li { font-size: 13px; color: rgba(240,237,232,0.4); line-height: 1.6; display: flex; gap: 10px; }
+  .exp-bullets li::before { content: '—'; color: #e88040; flex-shrink: 0; }
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
+  .skill-pill { background: rgba(240,237,232,0.05); border: 0.5px solid rgba(240,237,232,0.12); border-radius: 100px; padding: 7px 16px; font-size: 12px; color: rgba(240,237,232,0.65); letter-spacing: 0.3px; }
+  .skill-pill.featured { background: rgba(232,128,64,0.1); border-color: rgba(232,128,64,0.3); color: #e88040; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .lang-item { margin-bottom: 20px; }
+  .lang-name { font-size: 15px; font-weight: 500; color: #f0ede8; margin-bottom: 4px; }
+  .lang-level { font-size: 12px; color: rgba(240,237,232,0.4); margin-bottom: 10px; }
+  .lang-bar-bg { height: 3px; background: rgba(240,237,232,0.08); border-radius: 100px; }
+  .lang-bar { height: 3px; border-radius: 100px; background: #e88040; }
+  .soft-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+  .soft-icon { width: 38px; height: 38px; border-radius: 9px; background: rgba(232,128,64,0.08); border: 0.5px solid rgba(232,128,64,0.2); display: flex; align-items: center; justify-content: center; font-size: 17px; color: #e88040; flex-shrink: 0; }
+  .soft-title { font-size: 14px; font-weight: 500; color: #f0ede8; margin-bottom: 3px; }
+  .soft-desc { font-size: 12px; color: rgba(240,237,232,0.4); line-height: 1.6; }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .contact-card { background: rgba(240,237,232,0.03); border: 0.5px solid rgba(240,237,232,0.09); border-radius: 12px; padding: 20px 22px; display: flex; align-items: center; gap: 14px; }
+  .contact-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .ci-mail { background: rgba(232,128,64,0.1); color: #e88040; }
+  .ci-phone { background: rgba(0,200,150,0.1); color: #00c896; }
+  .ci-li { background: rgba(0,120,210,0.12); color: #5aaaf0; }
+  .ci-loc { background: rgba(200,60,130,0.1); color: #e06090; }
+  .contact-label { font-size: 10px; color: rgba(240,237,232,0.35); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .contact-value { font-size: 13px; font-weight: 500; color: #f0ede8; }
+  .contact-value a { color: #5aaaf0; text-decoration: none; }
+  .value-box { background: rgba(240,237,232,0.03); border: 0.5px solid rgba(240,237,232,0.09); border-radius: 14px; padding: 28px 32px; }
+  .value-box p { font-size: 14px; color: rgba(240,237,232,0.45); line-height: 1.75; }
+  .value-box strong { color: #e88040; font-weight: 500; }
+  .edu-detail { font-size: 13px; color: rgba(240,237,232,0.4); line-height: 1.7; margin-top: 8px; }
+  .edu-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .edu-tag { font-size: 11px; background: rgba(240,237,232,0.05); border: 0.5px solid rgba(240,237,232,0.1); border-radius: 6px; padding: 4px 12px; color: rgba(240,237,232,0.45); }
+  @media (max-width: 620px) {
+    .hero, section { padding-left: 20px; padding-right: 20px; }
+    .exp-item { grid-template-columns: 1fr; gap: 4px; }
+    .proof-grid, .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+<div class="hero">
+  <p class="hero-tag">Digital Marketing Specialist</p>
+  <h1 class="hero-name">Hazem Mohamed</h1>
+  <p class="hero-title">Creative and data-driven marketer with 3+ years building viral social media communities in the pet niche — turning organic engagement into measurable affiliate sales through platform-native storytelling, strategic content timing, and niche audience targeting.</p>
+  <div class="contact-row">
+    <span><i class="ti ti-map-pin" aria-hidden="true"></i> Cairo, Egypt</span>
+    <span><i class="ti ti-mail" aria-hidden="true"></i> hazemmohamed112005@gmail.com</span>
+    <span><i class="ti ti-phone" aria-hidden="true"></i> +201275723756</span>
+  </div>
+</div>
+
+<section>
+  <p class="section-label">Proven results</p>
+  <div class="stats-grid">
+    <div class="stat-card highlight">
+      <p class="stat-label">Total clicks</p>
+      <p class="stat-value">12k</p>
+      <p class="stat-source">Affiliate campaign</p>
+    </div>
+    <div class="stat-card highlight">
+      <p class="stat-label">Commission earned</p>
+      <p class="stat-value">$1032</p>
+      <p class="stat-source">18 orders </p>
+    </div>
+    <div class="stat-card highlight">
+      <p class="stat-label">Sales driven</p>
+      <p class="stat-value">$5000+</p>
+      <p class="stat-source">Direct revenue</p>
+    </div>
+    <div class="stat-card highlight">
+      <p class="stat-label">Combined followers</p>
+      <p class="stat-value">60k+</p>
+      <p class="stat-source">Across all accounts</p>
+    </div>
+  </div>
+  <div class="proof-grid">
+    <div class="proof-card">
+      <p class="proof-title">Affiliate program — <a href="https://www.yourcatgoodies.com/">YourCatGoodies</a></p>
+      <div class="proof-stats">
+        <div class="proof-row"><span class="proof-key">Clicks</span><span class="proof-val">8000+</span></div>
+        <div class="proof-row"><span class="proof-key">Orders</span><span class="proof-val">26</span></div>
+        <div class="proof-row"><span class="proof-key">Total sales</span><span class="proof-val">$3500+</span></div>
+        <div class="proof-row"><span class="proof-key">Commission</span><span class="proof-val orange">$732</span></div>
+      </div>
+    </div>
+    <div class="proof-card">
+      <p class="proof-title">Affiliate program — <a href="https://yourcatneeds.com/">yourCatNeeds</a></p>
+      <div class="proof-stats">
+        <div class="proof-row"><span class="proof-key">Clicks</span><span class="proof-val">3000+</span></div>
+        <div class="proof-row"><span class="proof-key">Referred orders</span><span class="proof-val">17</span></div>
+        <div class="proof-row"><span class="proof-key">Referred revenue</span><span class="proof-val">$1315+</span></div>
+        <div class="proof-row"><span class="proof-key">Total earnings</span><span class="proof-val orange">$300+</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">Social media accounts</p>
+
+    <a href="https://www.instagram.com/cat_car_daliy?igsh=cHY5aWs5MHFpZGlv" style="text-decoration: none;">
+      <div class="accounts-grid">
+        <div class="account-chip">
+          <div class="platform-dot ig"><i class="ti ti-brand-instagram" aria-hidden="true"></i></div>
+          <div class="account-info">
+            <p class="account-handle">@cat_car_daliy</p>
+            <p class="account-followers">30k+ followers</p>
+          </div>
+        </div>
+    </a>
+
+    <a href="https://www.instagram.com/cattfighter?igsh=ZDJ2c2kwbzhxcm9k" style="text-decoration: none;">
+      <div class="account-chip">
+        <div class="platform-dot ig"><i class="ti ti-brand-instagram" aria-hidden="true"></i></div>
+        <div class="account-info">
+          <p class="account-handle">@cattfighter</p>
+          <p class="account-followers">10k+ followers</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://www.instagram.com/angry_catt.daily?igsh=MW1xbjg2ZWlmeTFtbQ==" style="text-decoration: none;">
+      <div class="account-chip">
+        <div class="platform-dot ig"><i class="ti ti-brand-instagram" aria-hidden="true"></i></div>
+        <div class="account-info">
+          <p class="account-handle">@angry_catt.daily</p>
+          <p class="account-followers">2k+ followers</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://www.tiktok.com/@your_cat_goodies?_r=1&_t=ZS-968PsHJ2Ulj" style="text-decoration: none;">
+      <div class="account-chip">
+        <div class="platform-dot tt"><i class="ti ti-brand-tiktok" aria-hidden="true"></i></div>
+        <div class="account-info">
+          <p class="account-handle">@your_cat_goodies</p>
+          <p class="account-followers">16k+ followers</p>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section>
+  <p class="section-label">Work experience</p>
+  <div class="exp-list">
+    <div class="exp-item">
+      <p class="exp-date">Oct 2021 — Present</p>
+      <div>
+        <p class="exp-role">Digital Marketer</p>
+        <p class="exp-company">Your Cat Goodies</p>
+        <p class="exp-desc">Owned full-funnel social media strategy across TikTok and Instagram, growing a network of accounts to 300k+ combined followers. Specialized in emotionally engaging cat content that built loyal, purchase-ready communities.</p>
+        <ul class="exp-bullets">
+          <li>Grew @angry_catt.daily to 190k+ and @angry_meow.daily to 87k+ through consistent viral content</li>
+          <li>Leveraged "angry cat" video format to attract a highly targeted pet-lover audience with strong purchase intent</li>
+          <li>Strategically placed product links in bio and promotional Reels to maximize click-through and conversions</li>
+          <li>Balanced entertainment-first content with subtle product placement to preserve audience trust</li>
+          <li>Monitored platform algorithm updates and adapted content cadence for peak reach on Instagram Reels</li>
+          <li>Analyzed audience behavior data to refine posting times, formats, and niche targeting continuously</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <p class="exp-date">Jul 2019 — Jan 2020</p>
+      <div>
+        <p class="exp-role">Freelance Digital Marketer</p>
+        <p class="exp-company">Amazon Affiliate Program</p>
+        <p class="exp-desc">Promoted diverse product categories through content-driven affiliate strategies, building foundational skills that shaped future marketing work.</p>
+        <ul class="exp-bullets">
+          <li>Selected high-converting niches and crafted content around buyer intent to maximize affiliate revenue</li>
+          <li>Developed link placement and content timing strategies to boost click-through rates</li>
+          <li>Tested multiple product categories to identify profitable verticals and sustainable audience interest</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">Skills</p>
+  <div style="margin-bottom: 28px;">
+    <p style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(240,237,232,0.3); margin-bottom: 14px;">Marketing</p>
+    <div class="skills-wrap">
+      <span class="skill-pill featured">Social media marketing</span>
+      <span class="skill-pill featured">Affiliate sales</span>
+      <span class="skill-pill featured">Content strategy</span>
+      <span class="skill-pill featured">Instagram Reels</span>
+      <span class="skill-pill featured">TikTok</span>
+      <span class="skill-pill featured">Influencer content</span>
+      <span class="skill-pill featured">Niche targeting</span>
+      <span class="skill-pill featured">Bio-link conversion</span>
+      <span class="skill-pill featured">Campaign planning</span>
+      <span class="skill-pill featured">Audience analytics</span>
+    </div>
+  </div>
+  <div>
+    <p style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(240,237,232,0.3); margin-bottom: 14px;">Technical</p>
+    <div class="skills-wrap">
+      <span class="skill-pill">Web development</span>
+      <span class="skill-pill">Programming</span>
+      <span class="skill-pill">Digital systems</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">Languages & communication</p>
+  <div class="two-col">
+    <div>
+      <p style="font-size: 12px; color: rgba(240,237,232,0.3); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 22px;">Languages</p>
+      <div class="lang-item">
+        <p class="lang-name">Arabic</p>
+        <p class="lang-level">Native</p>
+        <div class="lang-bar-bg"><div class="lang-bar" style="width: 100%;"></div></div>
+      </div>
+      <div class="lang-item">
+        <p class="lang-name">English</p>
+        <p class="lang-level">Professional working proficiency</p>
+        <div class="lang-bar-bg"><div class="lang-bar" style="width: 78%;"></div></div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size: 12px; color: rgba(240,237,232,0.3); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 22px;">Soft skills</p>
+      <div class="soft-item">
+        <div class="soft-icon"><i class="ti ti-messages" aria-hidden="true"></i></div>
+        <div>
+          <p class="soft-title">Communication</p>
+          <p class="soft-desc">Clear and confident communicator across written and verbal channels — able to adapt tone for brands, clients, and audiences.</p>
+        </div>
+      </div>
+      <div class="soft-item">
+        <div class="soft-icon"><i class="ti ti-bolt" aria-hidden="true"></i></div>
+        <div>
+          <p class="soft-title">Proactive & self-motivated</p>
+          <p class="soft-desc">Independently built and scaled multiple social media accounts from zero without a team or agency.</p>
+        </div>
+      </div>
+      <div class="soft-item">
+        <div class="soft-icon"><i class="ti ti-layout-grid" aria-hidden="true"></i></div>
+        <div>
+          <p class="soft-title">Organised & detail-oriented</p>
+          <p class="soft-desc">Manages multiple active accounts, content calendars, and affiliate campaigns simultaneously.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">Education</p>
+  <div class="exp-item">
+    <p class="exp-date">2023 — Present</p>
+    <div>
+      <p class="exp-role">Bachelor of Computer Science</p>
+      <p class="exp-company">Modern University — Cairo</p>
+      <p class="edu-detail">Currently in second year, developing a strong technical foundation that complements practical marketing experience. Studying how digital systems, data structures, and the web work at a fundamental level — skills that directly inform smarter campaign decisions and platform understanding.</p>
+      <div class="edu-tags">
+        <span class="edu-tag">Web development</span>
+        <span class="edu-tag">Programming</span>
+        <span class="edu-tag">Digital systems</span>
+        <span class="edu-tag">Data structures</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">What I bring</p>
+  <div class="value-box">
+    <p>I don't just make content — I build <strong>communities with buying intent</strong>. Every account I've grown was designed from the start around a specific niche audience, with product placement introduced only after trust was established. This approach consistently converts because followers feel like they're receiving a recommendation, not watching an ad. I understand how platforms reward content, how audiences behave, and how to connect <strong>engagement metrics to actual revenue</strong>. Whether the product is cat treats or something entirely different, the same principles apply: know your audience, earn their attention, and place the right offer at the right moment.</p>
+  </div>
+</section>
+
+<section style="border-bottom: none;">
+  <p class="section-label">Get in touch</p>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon ci-mail"><i class="ti ti-mail" aria-hidden="true"></i></div>
+      <div>
+        <p class="contact-label">Email</p>
+        <p class="contact-value">hazemmohamed112005@gmail.com</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon ci-phone"><i class="ti ti-phone" aria-hidden="true"></i></div>
+      <div>
+        <p class="contact-label">WhatsApp</p>
+        <p class="contact-value">+20115602098</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon ci-li"><i class="ti ti-brand-linkedin" aria-hidden="true"></i></div>
+      <div>
+        <p class="contact-label">LinkedIn</p>
+        <p class="contact-value"><a href="https://www.linkedin.com/in/hazem-mohamed-872613302?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">linkedin.com/in/hazem-mohamed</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon ci-loc"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+      <div>
+        <p class="contact-label">Location</p>
+        <p class="contact-value">Cairo, Egypt</p>
+      </div>
+    </div>
+  </div>
+</section>
